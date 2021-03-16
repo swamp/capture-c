@@ -249,9 +249,15 @@ int writeReadBackTest(swamp_allocator* allocator)
     return 0;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     g_clog.log = tyran_log_implementation;
+
+    if (argc <= 1) {
+        CLOG_OUTPUT("usage: capture file");
+        return -1;
+    }
+
     swamp_allocator allocator;
     swamp_allocator_init(&allocator);
 
@@ -259,7 +265,7 @@ int main()
 
     SwampInCapture inCapture2;
     inCapture2.verbosity = 1;
-    readCapture(&inCapture2, "game.swamp-capture", 0, 0, &allocator);
+    readCapture(&inCapture2, argv[1], 0, 0, &allocator);
 
     return 0;
 }

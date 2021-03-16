@@ -3,6 +3,7 @@ project(swamp_capture C)
 
 set(CMAKE_C_STANDARD 99)
 
+
 set(deps ../../deps/)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -22,4 +23,4 @@ target_include_directories(swamp_capture_example PRIVATE ${deps}dump-c/src/inclu
 target_include_directories(swamp_capture_example PRIVATE ${deps}typeinfo-c/src/include)
 target_include_directories(swamp_capture_example PRIVATE ${deps}flood-c/src/include)
 
-target_link_libraries(swamp_capture_example swamp_capture m)
+target_link_libraries(swamp_capture_example swamp_capture_lib m)
