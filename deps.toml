@@ -16,6 +16,10 @@ name = 'swamp/typeinfo-c'
 version = "*"
 
 [[dependencies]]
+name = 'swamp/snapshot-c'
+version = "*"
+
+[[dependencies]]
 name = 'piot/flood-c'
 version = "*"
 

@@ -11,6 +11,7 @@
 #include <swamp-typeinfo/consume.h>
 #include <swamp-typeinfo/deep_equal.h>
 #include <swamp-typeinfo/serialize.h>
+#include <swamp-snapshot/write_typeinfo.h>
 #include <tiny-libc/tiny_libc.h>
 
 static int writeCaptureChunk(SwampOutCapture* self, uint32_t startTime, uint8_t stateRef, uint8_t inputRef)
@@ -32,28 +33,7 @@ static int writeCaptureChunk(SwampOutCapture* self, uint32_t startTime, uint8_t 
     return octets;
 }
 
-static int writeTypeInformationChunk(FldOutStream* stream, const SwtiChunk* chunk)
-{
-    uint8_t typeInformationOctets[1024];
 
-    int payloadCount = swtiSerialize(typeInformationOctets, 1024, chunk);
-    if (payloadCount < 0) {
-        return payloadCount;
-    }
-
-    RaffTag icon = {0xF0, 0x9F, 0x93, 0x9C};
-    RaffTag name = {'s', 't', 'i', '0'};
-    int octets = raffWriteChunkHeader(stream->p, stream->size - stream->pos, icon, name, payloadCount);
-    if (octets < 0) {
-        return octets;
-    }
-    stream->p += octets;
-    stream->pos += octets;
-
-    fldOutStreamWriteOctets(stream, typeInformationOctets, payloadCount);
-
-    return octets + payloadCount;
-}
 
 static int writeStateAndInputHeader(FldOutStream* stream)
 {
@@ -130,7 +110,7 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
 
     writeCaptureChunk(self, startTime, stateRef, inputRef);
 
-    writeTypeInformationChunk(self->outStream, &self->typeInformationChunk);
+    swsnWriteTypeInformationChunk(self->outStream, &self->typeInformationChunk);
 
     writeStateAndInputHeader(self->outStream);
 

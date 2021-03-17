@@ -7,6 +7,7 @@
 #include <raff/raff.h>
 #include <raff/tag.h>
 #include <swamp-capture/in_capture.h>
+#include <swamp-snapshot/read_typeinfo.h>
 #include <swamp-dump/dump.h>
 #include <swamp-dump/dump_ascii.h>
 #include <swamp-runtime/allocator.h>
@@ -51,40 +52,6 @@ static int readCaptureChunk(SwampInCapture* self, uint8_t* stateRef, uint8_t* in
     return octets;
 }
 
-static int readTypeInformationChunk(SwampInCapture* self)
-{
-    RaffTag foundIcon, foundName;
-    uint32_t foundChunkSize;
-    int octets = raffReadChunkHeader(self->inStream->p, self->inStream->size - self->inStream->pos, foundIcon,
-                                     foundName, &foundChunkSize);
-    if (octets < 0) {
-        return octets;
-    }
-    self->inStream->p += octets;
-    self->inStream->pos += octets;
-
-    RaffTag expectedIcon = {0xF0, 0x9F, 0x93, 0x9C};
-    RaffTag expectedName = {'s', 't', 'i', '0'};
-
-    if (!raffTagEqual(foundIcon, expectedIcon)) {
-        return -3;
-    }
-
-    if (!raffTagEqual(foundName, expectedName)) {
-        return -4;
-    }
-
-    int typeInformationOctetCount = swtiDeserialize(self->inStream->p, foundChunkSize,
-                                                    (SwtiChunk*) &self->typeInformationChunk);
-    if (typeInformationOctetCount < 0) {
-        return typeInformationOctetCount;
-    }
-
-    self->inStream->p += foundChunkSize;
-    self->inStream->pos += foundChunkSize;
-
-    return octets;
-}
 
 static int readStateAndInputChunk(SwampInCapture* self)
 {
@@ -168,7 +135,7 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint6
         return errorCode;
     }
 
-    errorCode = readTypeInformationChunk(self);
+    errorCode = swsnReadTypeInformationChunk(self->inStream, &self->typeInformationChunk);
     if (errorCode < 0) {
         return errorCode;
     }
