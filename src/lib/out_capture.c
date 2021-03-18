@@ -131,7 +131,7 @@ int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, con
     if (self->verbosity) {
         char temp[1024];
         fprintf(stderr, "%08X: write state: octetCount:%d %s\n", simulationFrame, octetCount,
-                swampDumpToAsciiString(stateValue, self->stateType, temp, 1024));
+                swampDumpToAsciiString(stateValue, self->stateType, 0, temp, 1024));
     }
 
     return 0;
@@ -166,7 +166,7 @@ int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, con
     if (self->verbosity) {
         char temp[1024];
         fprintf(stderr, "%08X: write input: octetCount:%d %s\n", simulationFrame, octetCount,
-                swampDumpToAsciiString(inputValue, self->inputType, temp, 1024));
+                swampDumpToAsciiString(inputValue, self->inputType, 0, temp, 1024));
     }
 
     return 0;

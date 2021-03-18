@@ -221,7 +221,7 @@ int swampInCaptureReadState(SwampInCapture* self, swamp_allocator* allocator, co
     if (self->verbosity) {
         char temp[1024];
         fprintf(stderr, "%08X: read state: %s\n", self->expectingSimulationFrame,
-                swampDumpToAsciiString(*stateValue, self->stateType, temp, 1024));
+                swampDumpToAsciiString(*stateValue, self->stateType, 0, temp, 1024));
     }
 
     return 0;
@@ -241,7 +241,7 @@ int swampInCaptureReadInput(SwampInCapture* self, swamp_allocator* allocator, co
     if (self->verbosity) {
         char temp[1024];
         fprintf(stderr, "%08X: read input: %s\n", self->expectingSimulationFrame - 1,
-                swampDumpToAsciiString(*inputValue, self->inputType, temp, 1024));
+                swampDumpToAsciiString(*inputValue, self->inputType, 0, temp, 1024));
     }
 
     return 0;
