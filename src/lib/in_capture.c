@@ -141,7 +141,7 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint6
     }
 
     if (verbosity > 2) {
-        swtiChunkDebugOutput(&self->typeInformationChunk, "read in capture");
+        swtiChunkDebugOutput(&self->typeInformationChunk, 0, "read in capture");
     }
 
     const SwtiType* deserializedStateType = swtiChunkTypeFromIndex(&self->typeInformationChunk, foundStateRef);
