@@ -13,7 +13,7 @@
 #include <swamp-runtime/allocator.h>
 #include <swamp-runtime/types.h>
 #include <swamp-typeinfo/chunk.h>
-#include <swamp-typeinfo/deep_equal.h>
+#include <swamp-typeinfo/equal.h>
 #include <swamp-typeinfo/deserialize.h>
 
 static int readCaptureChunk(SwampInCapture* self, uint8_t* stateRef, uint8_t* inputRef, uint64_t* startTime)
@@ -148,13 +148,13 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint6
     const SwtiType* deserializedInputType = swtiChunkTypeFromIndex(&self->typeInformationChunk, foundInputRef);
 
     if (expectedStateType != 0) {
-        if (swtiTypeDeepEqual(expectedStateType, deserializedStateType) != 0) {
+        if (swtiTypeEqual(expectedStateType, deserializedStateType) != 0) {
             return -4;
         }
     }
 
     if (expectedInputType != 0) {
-        if (swtiTypeDeepEqual(expectedInputType, deserializedInputType) != 0) {
+        if (swtiTypeEqual(expectedInputType, deserializedInputType) != 0) {
             return -5;
         }
     }

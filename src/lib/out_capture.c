@@ -8,8 +8,8 @@
 #include <swamp-dump/dump.h>
 #include <swamp-dump/dump_ascii.h>
 #include <swamp-typeinfo/chunk.h>
-#include <swamp-typeinfo/consume.h>
-#include <swamp-typeinfo/deep_equal.h>
+#include <swamp-typeinfo/add.h>
+#include <swamp-typeinfo/equal.h>
 #include <swamp-typeinfo/serialize.h>
 #include <swamp-snapshot/write_typeinfo.h>
 #include <tiny-libc/tiny_libc.h>
@@ -71,12 +71,12 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
     tempChunk.types = tc_malloc_type_count(const SwtiType*, 256);
 
     int stateIndex;
-    if ((stateIndex = swtiTypeConsume(&tempChunk, stateType)) < 0) {
+    if ((stateIndex = swtiChunkAddType(&tempChunk, stateType)) < 0) {
         return stateIndex;
     }
 
     int inputIndex;
-    if ((inputIndex = swtiTypeConsume(&tempChunk, inputType)) < 0) {
+    if ((inputIndex = swtiChunkAddType(&tempChunk, inputType)) < 0) {
         return inputIndex;
     }
 
@@ -91,11 +91,11 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
     const SwtiType* copiedStateType = swtiChunkTypeFromIndex(&self->typeInformationChunk, stateIndex);
     const SwtiType* copiedInputType = swtiChunkTypeFromIndex(&self->typeInformationChunk, inputIndex);
 
-    if (swtiTypeDeepEqual(stateType, copiedStateType) != 0) {
+    if (swtiTypeEqual(stateType, copiedStateType) != 0) {
         return -4;
     }
 
-    if (swtiTypeDeepEqual(inputType, copiedInputType) != 0) {
+    if (swtiTypeEqual(inputType, copiedInputType) != 0) {
         return -5;
     }
 
