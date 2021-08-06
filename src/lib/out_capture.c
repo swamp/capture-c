@@ -148,6 +148,7 @@ int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, con
         if (delta >= 0xff) {
             return -1;
         }
+        waitFrameCount = 0;
     } else {
         return -3;
     }

@@ -135,7 +135,7 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint6
         return errorCode;
     }
 
-    errorCode = swsnReadTypeInformationChunk(self->inStream, &self->typeInformationChunk);
+    errorCode = swsnReadTypeInformationChunk(self->inStream, (SwtiChunk*) &self->typeInformationChunk);
     if (errorCode < 0) {
         return errorCode;
     }
