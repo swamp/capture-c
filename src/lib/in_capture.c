@@ -10,7 +10,7 @@
 #include <swamp-snapshot/read_typeinfo.h>
 #include <swamp-dump/dump.h>
 #include <swamp-dump/dump_ascii.h>
-#include <swamp-runtime/allocator.h>
+
 #include <swamp-runtime/types.h>
 #include <swamp-typeinfo/chunk.h>
 #include <swamp-typeinfo/equal.h>
@@ -208,12 +208,14 @@ int swampInCaptureReadCommand(struct SwampInCapture* self, uint8_t* outCommand, 
     return command;
 }
 
-int swampInCaptureReadState(SwampInCapture* self, swamp_allocator* allocator, const swamp_value** stateValue)
+int swampInCaptureReadState(SwampInCapture* self, const void** stateValue)
 {
     if (self->lastCommand != 0xfe) {
         return -4;
     }
-    int errorCode = swampDumpFromOctets(self->inStream, allocator, self->stateType, stateValue);
+    void* creator = 0;
+    void* context = 0;
+    int errorCode = swampDumpFromOctets(self->inStream, self->stateType, creator, context, stateValue);
     if (errorCode != 0) {
         return errorCode;
     }
@@ -227,13 +229,13 @@ int swampInCaptureReadState(SwampInCapture* self, swamp_allocator* allocator, co
     return 0;
 }
 
-int swampInCaptureReadInput(SwampInCapture* self, swamp_allocator* allocator, const swamp_value** inputValue)
+int swampInCaptureReadInput(SwampInCapture* self, const void** inputValue)
 {
     if (self->lastCommand >= 0xfe) {
         return -4;
     }
 
-    int errorCode = swampDumpFromOctets(self->inStream, allocator, self->inputType, inputValue);
+    int errorCode = swampDumpFromOctets(self->inStream, self->inputType, 0, 0, inputValue);
     if (errorCode != 0) {
         return errorCode;
     }

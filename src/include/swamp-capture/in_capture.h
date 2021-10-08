@@ -10,8 +10,6 @@
 struct SwtiChunk;
 struct SwtiType;
 struct FldInStream;
-struct swamp_value;
-struct swamp_allocator;
 
 typedef struct SwampInCapture {
     struct FldInStream* inStream;
@@ -32,11 +30,11 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* outStream, uint
 
 int swampInCaptureReadCommand(struct SwampInCapture* self, uint8_t* outCommand, uint32_t* outSimulationFrame);
 
-int swampInCaptureReadState(SwampInCapture* self, struct swamp_allocator* allocator,
-                            const struct swamp_value** stateValue);
+int swampInCaptureReadState(SwampInCapture* self,
+                            const void** stateValue);
 
-int swampInCaptureReadInput(SwampInCapture* self, struct swamp_allocator* allocator,
-                            const struct swamp_value** inputValue);
+int swampInCaptureReadInput(SwampInCapture* self,
+                            const void** inputValue);
 
 void swampInCaptureClose(SwampInCapture* self);
 
