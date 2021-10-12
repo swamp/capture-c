@@ -13,6 +13,7 @@
 #include <swamp-typeinfo/serialize.h>
 #include <swamp-snapshot/write_typeinfo.h>
 #include <tiny-libc/tiny_libc.h>
+#include <clog/clog.h>
 
 static int writeCaptureChunk(SwampOutCapture* self, uint32_t startTime, uint8_t stateRef, uint8_t inputRef)
 {
@@ -146,6 +147,7 @@ int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, con
     } else if (simulationFrame > self->lastSimulationFrame) {
         int delta = simulationFrame - self->lastSimulationFrame - 1;
         if (delta >= 0xff) {
+            CLOG_SOFT_ERROR("simulation frame is way off: %d vs %d", simulationFrame, self->lastSimulationFrame);
             return -1;
         }
         waitFrameCount = 0;
