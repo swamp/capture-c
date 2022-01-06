@@ -8,7 +8,6 @@
 #include <raff/tag.h>
 #include <swamp-capture/in_capture.h>
 #include <swamp-snapshot/read_typeinfo.h>
-#include <swamp-dump/dump.h>
 #include <swamp-dump/dump_ascii.h>
 
 #include <swamp-runtime/types.h>
@@ -215,7 +214,7 @@ int swampInCaptureReadState(SwampInCapture* self, const void** stateValue)
     }
     void* creator = 0;
     void* context = 0;
-    int errorCode = swampDumpFromOctets(self->inStream, self->stateType, creator, context, stateValue);
+    int errorCode = 0; // TODO Fix this: swampDumpFromOctets(self->inStream, self->stateType, creator, context, stateValue);
     if (errorCode != 0) {
         return errorCode;
     }
@@ -235,7 +234,7 @@ int swampInCaptureReadInput(SwampInCapture* self, const void** inputValue)
         return -4;
     }
 
-    int errorCode = swampDumpFromOctets(self->inStream, self->inputType, 0, 0, inputValue);
+    int errorCode = 0; // TODO: Fix this: swampDumpFromOctets(self->inStream, self->inputType, 0, 0, inputValue);
     if (errorCode != 0) {
         return errorCode;
     }

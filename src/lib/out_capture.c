@@ -5,7 +5,6 @@
 #include <flood/out_stream.h>
 #include <raff/write.h>
 #include <swamp-capture/out_capture.h>
-#include <swamp-dump/dump.h>
 #include <swamp-dump/dump_ascii.h>
 #include <swamp-typeinfo/chunk.h>
 #include <swamp-typeinfo/add.h>
@@ -123,7 +122,7 @@ int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, con
     fldOutStreamWriteUInt8(self->outStream, completeStateFollows);
     fldOutStreamWriteUInt32(self->outStream, simulationFrame);
     int tell = self->outStream->pos;
-    int errorCode = swampDumpToOctets(self->outStream, stateValue, self->stateType);
+    int errorCode = 0; // TODO: FIX THIS: swampDumpToOctets(self->outStream, stateValue, self->stateType);
     if (errorCode != 0) {
         return errorCode;
     }
@@ -158,7 +157,7 @@ int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, con
     fldOutStreamWriteUInt8(self->outStream, waitFrameCount);
 
     int tell = self->outStream->pos;
-    int errorCode = swampDumpToOctets(self->outStream, inputValue, self->inputType);
+    int errorCode = 0; // TODO: FIX THIS: swampDumpToOctets(self->outStream, inputValue, self->inputType);
     if (errorCode != 0) {
         return errorCode;
     }
