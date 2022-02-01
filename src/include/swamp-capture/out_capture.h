@@ -11,7 +11,7 @@
 
 struct SwtiType;
 struct FldOutStream;
-struct swamp_value;
+
 
 typedef struct SwampOutCapture {
     struct FldOutStream* outStream;
@@ -25,9 +25,9 @@ typedef struct SwampOutCapture {
 int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, uint32_t startTime,
                         const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity);
 
-int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, const struct swamp_value* stateValue);
+int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, const void* stateValue);
 
-int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, const struct swamp_value* inputValue);
+int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, const void* inputValue);
 
 void swampOutCaptureClose(SwampOutCapture* self);
 

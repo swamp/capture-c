@@ -117,7 +117,7 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
     return 0;
 }
 
-int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, const struct swamp_value* stateValue)
+int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, const void* stateValue)
 {
     fldOutStreamWriteUInt8(self->outStream, completeStateFollows);
     fldOutStreamWriteUInt32(self->outStream, simulationFrame);
@@ -137,7 +137,7 @@ int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, con
     return 0;
 }
 
-int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, const struct swamp_value* inputValue)
+int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, const void* inputValue)
 {
     uint8_t waitFrameCount;
 
