@@ -93,9 +93,9 @@ static int readHeader(SwampInCapture* self)
     return octetsWritten;
 }
 
-const uint32_t lastFrame = 0xffffffff;
-const uint8_t endOfStream = 0xff;
-const uint8_t completeStateFollows = 0xfe;
+const static uint32_t lastFrame = 0xffffffff;
+const static uint8_t endOfStream = 0xff;
+const static uint8_t completeStateFollows = 0xfe;
 
 int swampInCaptureCmdIsEnd(uint8_t cmd)
 {
@@ -176,7 +176,7 @@ int swampInCaptureReadCommand(struct SwampInCapture* self, uint8_t* outCommand, 
 
     if (command == 0xff) {
         if (self->verbosity) {
-            CLOG_DEBUG("> ** read command: end of stream **");
+            CLOG_DEBUG("> ** read command: end of stream **")
         }
         *outSimulationFrame = 0xffffffff;
         *outCommand = 0xff;
@@ -186,7 +186,7 @@ int swampInCaptureReadCommand(struct SwampInCapture* self, uint8_t* outCommand, 
     if (command == 0xfe) {
         errorCode = fldInStreamReadUInt32(self->inStream, outSimulationFrame);
         if (self->verbosity) {
-            CLOG_DEBUG("> %08X: read command: full state follows", *outSimulationFrame);
+            CLOG_DEBUG("> %08X: read command: full state follows", *outSimulationFrame)
         }
         self->expectingSimulationFrame = *outSimulationFrame;
         *outCommand = command;
@@ -198,7 +198,7 @@ int swampInCaptureReadCommand(struct SwampInCapture* self, uint8_t* outCommand, 
     self->expectingSimulationFrame += deltaWaitFrame;
 
     if (self->verbosity) {
-        CLOG_INFO("> %08X: read command: input  (delta:%d)", self->expectingSimulationFrame, deltaWaitFrame);
+        CLOG_INFO("> %08X: read command: input  (delta:%d)", self->expectingSimulationFrame, deltaWaitFrame)
     }
     *outSimulationFrame = self->expectingSimulationFrame;
     *outCommand = command;
