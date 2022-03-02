@@ -13,6 +13,7 @@
 #include <swamp-snapshot/write_typeinfo.h>
 #include <tiny-libc/tiny_libc.h>
 #include <clog/clog.h>
+#include <swamp-dump/dump.h>
 
 static int writeCaptureChunk(SwampOutCapture* self, uint32_t startTime, uint8_t stateRef, uint8_t inputRef)
 {
@@ -92,10 +93,12 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
     const SwtiType* copiedInputType = swtiChunkTypeFromIndex(&self->typeInformationChunk, inputIndex);
 
     if (swtiTypeEqual(stateType, copiedStateType) != 0) {
+        CLOG_ERROR("internal error. couldn't copy stateType")
         return -4;
     }
 
     if (swtiTypeEqual(inputType, copiedInputType) != 0) {
+        CLOG_ERROR("internal error. couldn't copy inputType")
         return -5;
     }
 
@@ -122,8 +125,8 @@ int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, con
     fldOutStreamWriteUInt8(self->outStream, completeStateFollows);
     fldOutStreamWriteUInt32(self->outStream, simulationFrame);
     int tell = self->outStream->pos;
-    int errorCode = 0; // TODO: FIX THIS: swampDumpToOctets(self->outStream, stateValue, self->stateType);
-    if (errorCode != 0) {
+    int errorCode = swampDumpToOctets(self->outStream, stateValue, self->stateType);
+    if (errorCode < 0) {
         return errorCode;
     }
     int octetCount = self->outStream->pos - tell;
@@ -157,7 +160,7 @@ int swampOutCaptureAddInput(SwampOutCapture* self, uint32_t simulationFrame, con
     fldOutStreamWriteUInt8(self->outStream, waitFrameCount);
 
     int tell = self->outStream->pos;
-    int errorCode = 0; // TODO: FIX THIS: swampDumpToOctets(self->outStream, inputValue, self->inputType);
+    int errorCode = swampDumpToOctets(self->outStream, inputValue, self->inputType);
     if (errorCode != 0) {
         return errorCode;
     }
