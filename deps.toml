@@ -4,23 +4,7 @@ name = "swamp/capture-c"
 version = "0.0.0"
 
 [[dependencies]]
-name = 'piot/clog'
-version = "*"
-
-[[dependencies]]
-name = 'swamp/runtime-c'
-version = "*"
-
-[[dependencies]]
-name = 'swamp/typeinfo-c'
-version = "*"
-
-[[dependencies]]
 name = 'swamp/snapshot-c'
-version = "*"
-
-[[dependencies]]
-name = 'piot/flood-c'
 version = "*"
 
 [[dependencies]]
