@@ -13,7 +13,7 @@
 #include <swamp-runtime/types.h>
 #include <swamp-typeinfo/chunk.h>
 #include <swamp-typeinfo/equal.h>
-#include <swamp-typeinfo/deserialize.h>
+#include <swamp-typeinfo-serialize/deserialize.h>
 
 static int readCaptureChunk(SwampInCapture* self, uint8_t* stateRef, uint8_t* inputRef, uint64_t* startTime)
 {

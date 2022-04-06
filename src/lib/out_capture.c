@@ -9,7 +9,7 @@
 #include <swamp-typeinfo/chunk.h>
 #include <swamp-typeinfo/add.h>
 #include <swamp-typeinfo/equal.h>
-#include <swamp-typeinfo/serialize.h>
+#include <swamp-typeinfo-serialize/serialize.h>
 #include <swamp-snapshot/write_typeinfo.h>
 #include <tiny-libc/tiny_libc.h>
 #include <clog/clog.h>
