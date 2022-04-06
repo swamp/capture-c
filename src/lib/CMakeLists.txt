@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
-project(swamp_capture_lib C)
+project(swamp_capture C)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 
 set(deps ../../deps/)
 
@@ -17,28 +17,25 @@ if (isDebug)
     set(CONFIGURATION_DEBUG 1)
 endif()
 
-file(GLOB_RECURSE deps_src FOLLOW_SYMLINKS
-        "${deps}*/src/lib/*.c"
-        )
-
 file(GLOB_RECURSE lib_src FOLLOW_SYMLINKS
         "*.c"
         )
 
-add_library(swamp_capture_lib STATIC
-    ${deps_src}
+add_library(swamp_capture STATIC
     ${lib_src}
 )
 
 
-target_include_directories(swamp_capture_lib PRIVATE ${deps}runtime-c/src/include)
-target_include_directories(swamp_capture_lib PRIVATE ${deps}dump-c/src/include)
-target_include_directories(swamp_capture_lib PRIVATE ${deps}typeinfo-c/src/include)
-target_include_directories(swamp_capture_lib PRIVATE ${deps}tiny-libc/src/include)
-target_include_directories(swamp_capture_lib PRIVATE ${deps}flood-c/src/include)
-target_include_directories(swamp_capture_lib PRIVATE ${deps}raff-c/src/include)
-target_include_directories(swamp_capture_lib PRIVATE ${deps}clog/src/include)
-target_include_directories(swamp_capture_lib PUBLIC ../include)
+target_include_directories(swamp_capture PUBLIC ${deps}swamp/runtime-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}swamp/dump-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}swamp/typeinfo-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}swamp/typeinfo-serialize-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}swamp/snapshot-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}piot/tiny-libc/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}piot/flood-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}piot/raff-c/src/include)
+target_include_directories(swamp_capture PUBLIC ${deps}piot/clog/src/include)
+target_include_directories(swamp_capture PUBLIC ../include)
 
 
-target_link_libraries(swamp_capture_lib m)
+target_link_libraries(swamp_capture m)
