@@ -114,7 +114,7 @@ int swampInCaptureCmdIsInput(uint8_t cmd)
 
 int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint64_t* startTime,
                        const struct SwtiType* expectedStateType, const struct SwtiType* expectedInputType,
-                       int verbosity)
+                       int verbosity, struct ImprintAllocator* allocator)
 {
     self->inStream = inStream;
     self->verbosity = verbosity;
@@ -134,7 +134,7 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint6
         return errorCode;
     }
 
-    errorCode = swsnReadTypeInformationChunk(self->inStream, (SwtiChunk*) &self->typeInformationChunk);
+    errorCode = swsnReadTypeInformationChunk(self->inStream, (SwtiChunk*) &self->typeInformationChunk, allocator);
     if (errorCode < 0) {
         return errorCode;
     }

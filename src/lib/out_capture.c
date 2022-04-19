@@ -62,7 +62,7 @@ static const uint8_t endOfStream = 0xff;
 static const uint8_t completeStateFollows = 0xfe;
 
 int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, uint32_t startTime,
-                        const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity)
+                        const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity, struct ImprintAllocator* allocator)
 {
     self->outStream = outStream;
 
@@ -72,12 +72,12 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
     tempChunk.types = tc_malloc_type_count(const SwtiType*, 256);
 
     int stateIndex;
-    if ((stateIndex = swtiChunkAddType(&tempChunk, stateType)) < 0) {
+    if ((stateIndex = swtiChunkAddType(&tempChunk, stateType, allocator)) < 0) {
         return stateIndex;
     }
 
     int inputIndex;
-    if ((inputIndex = swtiChunkAddType(&tempChunk, inputType)) < 0) {
+    if ((inputIndex = swtiChunkAddType(&tempChunk, inputType, allocator)) < 0) {
         return inputIndex;
     }
 

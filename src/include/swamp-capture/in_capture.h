@@ -10,6 +10,8 @@
 struct SwtiChunk;
 struct SwtiType;
 struct FldInStream;
+struct ImprintAllocator;
+
 
 typedef struct SwampInCapture {
     struct FldInStream* inStream;
@@ -26,7 +28,7 @@ int swampInCaptureCmdIsState(uint8_t cmd);
 int swampInCaptureCmdIsInput(uint8_t cmd);
 
 int swampInCaptureInit(SwampInCapture* self, struct FldInStream* outStream, uint64_t* startTime,
-                       const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity);
+                       const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity, struct ImprintAllocator* allocator);
 
 int swampInCaptureReadCommand(struct SwampInCapture* self, uint8_t* outCommand, uint32_t* outSimulationFrame);
 

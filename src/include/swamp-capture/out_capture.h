@@ -11,6 +11,7 @@
 
 struct SwtiType;
 struct FldOutStream;
+struct ImprintAllocator;
 
 
 typedef struct SwampOutCapture {
@@ -23,7 +24,7 @@ typedef struct SwampOutCapture {
 } SwampOutCapture;
 
 int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, uint32_t startTime,
-                        const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity);
+                        const struct SwtiType* stateType, const struct SwtiType* inputType, int verbosity, struct ImprintAllocator* allocator);
 
 int swampOutCaptureAddState(SwampOutCapture* self, uint32_t simulationFrame, const void* stateValue);
 
