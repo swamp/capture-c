@@ -67,7 +67,7 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
     self->outStream = outStream;
 
     SwtiChunk tempChunk;
-    swtiChunkInit(&tempChunk, 0, 0);
+    swtiChunkInit(&tempChunk, 0, 0, allocator);
     tempChunk.maxCount = 256;
     tempChunk.types = tc_malloc_type_count(const SwtiType*, 256);
 
@@ -81,7 +81,7 @@ int swampOutCaptureInit(SwampOutCapture* self, struct FldOutStream* outStream, u
         return inputIndex;
     }
 
-    swtiChunkInit((SwtiChunk*) &self->typeInformationChunk, tempChunk.types, tempChunk.typeCount);
+    swtiChunkInit((SwtiChunk*) &self->typeInformationChunk, tempChunk.types, tempChunk.typeCount, allocator);
     // HACK
     SwtiChunk* p = (SwtiChunk*) &self->typeInformationChunk;
     p->maxCount = tempChunk.typeCount;

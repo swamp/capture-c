@@ -120,7 +120,7 @@ int swampInCaptureInit(SwampInCapture* self, struct FldInStream* inStream, uint6
     self->verbosity = verbosity;
     self->expectingSimulationFrame = lastFrame;
 
-    swtiChunkInit((SwtiChunk*) &self->typeInformationChunk, 0, 0);
+    swtiChunkInit((SwtiChunk*) &self->typeInformationChunk, 0, 0, allocator);
 
     int errorCode = readHeader(self);
     if (errorCode < 0) {
