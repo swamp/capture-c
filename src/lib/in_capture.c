@@ -10,8 +10,6 @@
 #include <swamp-snapshot/read_typeinfo.h>
 #include <swamp-dump/dump_ascii.h>
 
-#include <swamp-runtime/types.h>
-#include <swamp-typeinfo/chunk.h>
 #include <swamp-typeinfo/equal.h>
 #include <swamp-typeinfo-serialize/deserialize.h>
 
