@@ -210,8 +210,8 @@ int swampInCaptureReadState(SwampInCapture* self, const void** stateValue)
     if (self->lastCommand != 0xfe) {
         return -4;
     }
-    void* creator = 0;
-    void* context = 0;
+    //void* creator = 0;
+    //void* context = 0;
     int errorCode = 0; // TODO Fix this: swampDumpFromOctets(self->inStream, self->stateType, creator, context, stateValue);
     if (errorCode != 0) {
         return errorCode;
